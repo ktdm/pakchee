@@ -1,0 +1,17 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    "requests", media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "requests", "data-turbolinks-track" => true %>
+<% end %>
+<h1>Requests</h1>
+<% if @requests.empty? %>
+<p>No requests.</p>
+<% else %>
+<table>
+<%  @requests.each do |req| %>
+ <tr>
+  <td><%= req.created_at %></td>
+  <td><%= req.text %></td>
+ </tr>
+<%  end %>
+</table>
+<% end %>

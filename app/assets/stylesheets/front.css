@@ -1,0 +1,162 @@
+* {
+ margin: 0;
+ padding: 0;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box
+}
+
+html, body {
+ width: 100%;
+ height: 100%;
+ overflow: hidden
+}
+
+body {
+ background: #444 url(/assets/icecream.jpg) 25% 75% / cover no-repeat fixed
+}
+
+#keyCtr {
+ position: relative;
+ margin: 10% 10%;
+ font-size: 24pt;
+ height: 1.45em;
+ width: 50%
+}
+
+#keyCtr > * {
+ position: absolute;
+ font-size: 24pt;
+ height: 1.45em;
+ width: 100%
+}
+
+#keyBg {
+ -khtml-opacity: .5;
+ -moz-opacity: .5;
+ -ms-filter: "alpha(opacity=50)";
+ filter: alpha(opacity=50);
+ filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+ opacity: .5;
+ background-color: black;
+ border: 1px solid darkgrey
+}
+
+#key {
+ outline: 0;
+ padding: .13em .15em;
+ background-color: transparent;
+ color: white;
+ font-family: monospace;
+ overflow: hidden;
+ width: calc(100% - .39em);
+ width: -webkit-calc(100% - .39em)
+}
+
+::selection {
+ background-color: orchid
+}
+::-moz-selection {
+ background: orchid
+}
+
+#info {
+ position: absolute;
+ bottom: 5px;
+ right: 5px;
+ font-size: 9pt;
+ color: white;
+ font-family: sans-serif;
+ max-width: 15em;
+ cursor: pointer
+}
+
+#about {
+ max-height: 1.3em;
+ max-width: 9em;
+ overflow: hidden
+}
+
+p {
+ margin-bottom: .8em;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ line-height: 1.3em
+}
+
+p:last-child {
+ margin-bottom: auto
+}
+
+#req {
+ height: 10em;
+ max-width: 15em;
+ margin-top: .8em;
+ background-color: black
+}
+
+#reqTxt {
+ height: 7em;
+ padding: .3em;
+ word-wrap: break-word;
+ overflow: auto;
+ line-height: 1.3em;
+ outline: 0
+}
+
+#msg {
+ max-width: 8em;
+ white-space: nowrap;
+ overflow: auto;
+ text-overflow: ellipsis;
+ display: inline-block;
+ padding: 1.05em .5em
+}
+
+#msg > * {
+ opacity: 1;
+ transition: opacity 1s ease-in-out 1s
+}
+
+#msgStr {
+ background-color: red;
+ color: black;
+ padding: .2em
+}
+
+.fadeout {
+ opacity: 0 !important
+}
+
+#submit {
+ float: right;
+ margin: .3em;
+ display: none;
+ background-color: #444;
+ padding: .5em;
+ border: 1px solid grey;
+ cursor: pointer;
+
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+}
+#submit::selection {
+ background-color: transparent
+}
+#submit::-moz-selection {
+ background: transparent
+}
+
+#submit:active {
+ background-color: darkgrey
+}
+
+#minimise:hover {
+ cursor: pointer;
+ border-bottom: 1px dashed #444
+}

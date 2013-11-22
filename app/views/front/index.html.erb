@@ -1,0 +1,24 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    "front", media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "front", "data-turbolinks-track" => true %>
+<% end %>
+<div id="keyCtr">
+ <div id="keyBg"></div>
+ <div id="key" contenteditable focus>key:>></div>
+</div>
+<div id="info">
+ <div id="about">
+  <div id="abtTxt">
+   <p>This website is secret web pages to share with your friends.</p>
+   <p>If you want one, describe what you want and leave your email below.</p>
+   <p>No guarantees you get one.</p>
+   <p>No guarantees you get what you want.</p>
+  </div>
+  <%= form_for :request, :url => {controller: "requests"}, :html => {id: "req"}, :remote => true do |f| %>
+   <%= f.hidden_field :text %>
+   <div id="reqTxt" contenteditable>&zwnj;</div>
+   <div id="msg"><span id="minimise">Minimise</span></div>
+   <div id="submit" name="commit" unselectable="on">submit</div>
+  <% end %>
+ </div>
+</div>
