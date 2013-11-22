@@ -6,12 +6,20 @@
 <% if @requests.empty? %>
 <p>No requests.</p>
 <% else %>
+<%= form_tag destroy_multiple_requests_path, method: :delete do %>
 <table>
-<%  @requests.each do |req| %>
+ <tr>
+  <td>timestamp</td>
+  <td>request</td>
+  <td><%= submit_tag "destroy" %><input id="toggle" type="button" value="none" /></td>
+ </tr>
+<%   @requests.each do |req| %>
  <tr>
   <td><%= req.created_at %></td>
   <td><%= req.text %></td>
+  <td><%= check_box_tag "requests[]", req.id%></td>
  </tr>
-<%  end %>
+<%   end %>
 </table>
+<%  end %>
 <% end %>

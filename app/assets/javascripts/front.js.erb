@@ -27,7 +27,7 @@ $(document).ready(function() {
 
  $("#req").data({val: ""});
  $("#reqTxt").on("keyup", function (e) {
-  if ($(this).text().length > 300) {
+  if ($(this).text().length > 500) {
    msg("Too long");
    $(this).text($("#req").data("val"))
   } else {

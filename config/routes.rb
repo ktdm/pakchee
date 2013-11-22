@@ -2,8 +2,11 @@ Pakchee::Application.routes.draw do
 
   root "front#index"
 
-  resources :requests, :only => [:index, :create]
-
+  resources :requests, :only => [:index, :create] do
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
