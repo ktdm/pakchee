@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <title>pakchee</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript">
+
+function $ (id) { return document.getElementById(id) }
+
+function addEvent (els, event, fn) {
+ if ( !(els instanceof Array) ) els = [els];
+ for (var a = 0; el = els[a]; a++) {
+  el.addEventListener ?
+   el.addEventListener(event, fn, false) :
+   el.attachEvent("on" + event, function () { return fn.call(el, window.event) })
+ }
+}
+
+var raf = requestAnimationFrame
+ || webkitRequestAnimationFrame
+ || mozRequestAnimationFrame
+ || oRequestAnimationFrame
+ || msRequestAnimationFrame
+ || function (c) { setTimeout(c, 0) }
+
+function init () {
+
+ addEvent( $("about"), "click", function () {
+  this.style.cursor = "default";
+  this.style.maxWidth = "inherit";
+  this.style.maxHeight = "inherit";
+  for (var a = 0, b; (b = $("abtTxt").childNodes[a]); a++) if (b.nodeType == 1) b.style.whiteSpace = "inherit";
+  $("submit").style.display = "block"
+ } );
+
+ addEvent( $("reqTxt"), "keydown", function (e) {
+  if ($("tooLong") || e.which == 8 && this.firstChild.data.length == 1) e.preventDefault()
+ } );
+
+ addEvent( [$("minimise"), $("submit")], "click", function (e) {
+  $("about").style.cursor = null;
+  $("about").style.maxWidth = null;
+  $("about").style.maxHeight = null;
+  for (var a = 0, b; (b = $("abtTxt").childNodes[a]); a++) if (b.nodeType == 1) b.style.whiteSpace = null;
+  $("submit").style.display = null;
+  e.stopPropagation()
+ } );
+
+ var reqVal = "";
+ addEvent( $("reqTxt"), "input", function (e) {
+  var reqUpd = this.innerText || this.textContent, m;
+  if (reqUpd.length > 300) {
+   m = document.createElement("div");
+   m.id = "tooLong";
+   m.innerHTML = "Too long";
+   $("msg").appendChild(m);
+   $("minimise").style.display = "none";
+   raf(function () { $("tooLong").className += " fadeout"; });
+   setTimeout(function () {
+    $("minimise").style = null;
+    $("msg").removeChild($("tooLong"))
+   }, 2000);
+   this.innerHTML = reqVal
+  } else {
+   reqVal = reqUpd
+  }
+ } );
+
+ addEvent( $("submit"), "click", function () { $("reqTxt").innerHTML = "" } );
+
+ $("key").focus();
+ ( window.getSelection ? window.getSelection() : document.selection.createRange() ).modify("move", "forward", "line")
+
+}
+
+  </script>
+  <style type="text/css">
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box
+}
+
+html, body {
+ width: 100%;
+ height: 100%;
+ overflow: hidden
+}
+
+body {
+ background: #444 url(/images/icecream.jpg) 25% 75% / cover no-repeat fixed
+}
+
+#keyCtr {
+ position: relative;
+ margin: 10% 10%;
+ font-size: 24pt;
+ height: 1.45em;
+ width: 50%
+}
+
+#keyCtr > * {
+ position: absolute;
+ font-size: 24pt;
+ height: 1.45em;
+ width: 100%
+}
+
+#keyBg {
+ -khtml-opacity: .5;
+ -moz-opacity: .5;
+ -ms-filter: "alpha(opacity=50)";
+ filter: alpha(opacity=50);
+ filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+ opacity: .5;
+ background-color: black;
+ border: 1px solid darkgrey
+}
+
+#key {
+ outline: 0;
+ padding: .13em .15em;
+ background-color: transparent;
+ color: white;
+ font-family: monospace;
+ overflow: hidden;
+ width: calc(100% - .39em);
+ width: -webkit-calc(100% - .39em)
+}
+
+::selection {
+ background-color: orchid
+}
+::-moz-selection {
+ background: orchid
+}
+
+#info {
+ position: absolute;
+ bottom: 5px;
+ right: 5px;
+ font-size: 9pt;
+ color: white;
+ font-family: sans-serif;
+ max-width: 15em;
+ cursor: pointer
+}
+
+#about {
+ max-height: 1.3em;
+ max-width: 9em;
+ overflow: hidden
+}
+
+p {
+ margin-bottom: .8em;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ line-height: 1.3em
+}
+
+p:last-child {
+ margin-bottom: auto
+}
+
+#req {
+ height: 9.7em;
+ max-width: 15em;
+ margin-top: .8em;
+ background-color: black
+}
+
+#reqTxt {
+ height: 6em;
+ padding: .3em;
+ word-wrap: break-word;
+ overflow: auto;
+ line-height: 1.3em;
+ outline: 0
+}
+
+#msg {
+ max-width: 8em;
+ white-space: nowrap;
+ overflow: auto;
+ text-overflow: ellipsis;
+ display: inline-block;
+ padding: 1.05em .5em
+}
+
+#msg > * {
+ opacity: 1;
+ transition: opacity 1s ease-in-out 1s
+}
+
+#tooLong {
+ background-color: red;
+ color: black;
+ padding: .2em
+}
+
+.fadeout {
+ opacity: 0 !important
+}
+
+#submit {
+ float: right;
+ margin: .3em;
+ display: none;
+ background-color: #444;
+ padding: .5em;
+ border: 1px solid grey;
+ cursor: pointer;
+
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+}
+#submit::selection {
+ background-color: transparent
+}
+#submit::-moz-selection {
+ background: transparent
+}
+
+#submit:active {
+ background-color: darkgrey
+}
+
+#minimise:hover {
+ cursor: pointer;
+ border-bottom: 1px dashed #444
+}
+
+  </style>
+ </head>
+ <body onload="init()">
+  <div id="bg"></div>
+  <div id="keyCtr">
+   <div id="keyBg"></div>
+   <div id="key" contenteditable focus>key:>></div>
+  </div>
+  <div id="info">
+   <div id="about">
+    <div id="abtTxt">
+     <p>This website is secret shared web pages for friends.</p>
+     <p>If you want one, describe what you want and leave your email below.</p>
+     <p>No guarantees you get one.</p>
+     <p>No guarantees you get what you want.</p>
+    </div>
+    <div id="req">
+     <div id="reqTxt" contenteditable>&zwnj;</div>
+     <div id="msg"><span id='minimise'>Minimise</span></div>
+     <div id="submit" unselectable="on">submit</div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
