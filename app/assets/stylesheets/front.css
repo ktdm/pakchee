@@ -115,11 +115,11 @@ p:last-child {
 }
 
 #msg > * {
- opacity: 1;
- transition: opacity 1s ease-in-out 1s
+ opacity: 1
 }
 
 #msgStr {
+ transition: opacity 1s ease-in-out 1s;
  background-color: red;
  color: black;
  padding: .2em

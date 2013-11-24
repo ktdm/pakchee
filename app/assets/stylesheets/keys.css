@@ -1,0 +1,19 @@
+table {
+ border-collapse: collapse
+}
+
+td {
+ vertical-align: text-bottom;
+ border: 2px solid black;
+ border-right-color: transparent;
+ border-style: double solid
+}
+
+td:last-child {
+ border-right-color: black
+}
+
+.error {
+ background-color: red;
+ padding: .5em
+}

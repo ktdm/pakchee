@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131122103238) do
+ActiveRecord::Schema.define(version: 20131123053102) do
+
+  create_table "keys", force: true do |t|
+    t.string   "role",       default: "basic"
+    t.integer  "site_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "requests", force: true do |t|
     t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sites", force: true do |t|
+    t.text     "io",         default: ""
+    t.text     "ops",        default: ""
+    t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

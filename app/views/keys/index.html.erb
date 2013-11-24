@@ -1,0 +1,37 @@
+<h1>Create a key</h1>
+<%= form_for :key, :url => {action: "create"}, :html => {id: "save_key"} do |f| %>
+<%=  f.submit %>
+<table>
+ <tr>
+  <td>Role:</td>
+  <td>
+<%=  f.radio_button :role, "basic" -%>
+  </td>
+  <td>basic</td>
+ </tr>
+ <tr>
+  <td></td>
+  <td>
+<%=  f.radio_button :role, "council" %>
+  </td>
+  <td>council</td>
+ </tr>
+<%=  fields_for :site_do do |s| %>
+ <tr>
+  <td>Site:</td>
+  <td>
+<%=   s.radio_button :init, "new", :checked => true %>
+  </td>
+  <td>new</td>
+ </tr>
+ <tr>
+  <td></td>
+  <td>
+<%=   s.radio_button :init, "existing" %>
+  </td>
+  <td>existing</td>
+ </tr>
+<%-  end -%>
+</table>
+<div id="attach_site"></div>
+<%- end -%>

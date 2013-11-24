@@ -1,0 +1,9 @@
+<h1>Edit site</h1>
+<h2>Reserved by management</h2>
+<%= form_for :site, url: site_path(@site), method: :patch do |f| %>
+<div>io</div>
+<%=  f.text_area :io %>
+<div>ops</div>
+<%=  f.text_area :ops %>
+<%=  f.submit %>
+<%- end -%>

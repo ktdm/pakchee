@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
  $("#about").click(function () {
   $(this).css({
@@ -11,7 +11,7 @@ $(document).ready(function() {
  });
 
  $("#reqTxt").keydown(function (e) {
-  if ($("msgStr").length || e.which == 8 && $("#req").text() == "\u200c") {e.preventDefault()} //prevents f5 for 2s :(
+  if ($("#msgStr").length || e.which == 8 && $("#req").text() == "\u200c") e.preventDefault() //prevents f5 for 2s :(
  });
 
  $("#minimise").click(function (e) {
@@ -26,9 +26,9 @@ $(document).ready(function() {
  });
 
  $("#req").data({val: ""});
- $("#reqTxt").on("keyup", function (e) {
-  if ($(this).text().length > 500) {
-   msg("Too long");
+ $("#reqTxt").on("keydown keyup", function (e) {
+  if ($(this).text().length > 10) {
+   if (!$("#msgStr").length) msg("Too long"); // queue?
    $(this).text($("#req").data("val"))
   } else {
    if ($("#req").data("paste")) {
@@ -38,7 +38,7 @@ $(document).ready(function() {
    $("#req").data({val: $(this).text()})
   }
  });
- $("#reqTxt").on("paste", function () {$("#req").data({paste: true})});
+ $("#reqTxt").on("paste", function () { $("#req").data({paste: true}) });
 
  $("#submit").click(function () {
   $("#request_text").val($("#reqTxt").text());
@@ -49,7 +49,7 @@ $(document).ready(function() {
   msg("Success!");
   $("#reqTxt").empty();
   $("#request_text").val("");
-  setTimeout(function () {$("#minimise").click()}, 2000)
+  setTimeout(function () { $("#minimise").click() }, 2000)
  }).bind("ajax:error", function (e, xhr, status, error) {
   msg("Error")
  });
@@ -61,7 +61,11 @@ $(document).ready(function() {
 
 function msg(str) {
  $("<div/>", {id: "msgStr", text: str}).appendTo("#msg");
- $("#minimise").hide(0).delay(2000).show(0);
- $("#msgStr").addClass("fadeout");
- setTimeout(function () { $("#msgStr").remove() }, 2000);
+ $("#minimise").css({ display: "none" });
+ setTimeout(function () { $("#msgStr").addClass("fadeout") }, 0);
+ setTimeout(function () {
+  document.getElementById("minimise").offsetHeight;
+  $("#minimise").css({ display: "block" });
+  $("#msgStr").remove()
+ }, 2000);
 }

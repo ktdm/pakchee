@@ -2,6 +2,12 @@ Pakchee::Application.routes.draw do
 
   root "front#index"
 
+  get "scaffold" => "front#scaffold"
+
+  resources :keys, :only => [:index, :create]
+
+  resources :sites
+
   resources :requests, :only => [:index, :create] do
     collection do
       delete 'destroy_multiple'
