@@ -1,6 +1,12 @@
 <div id="keyCtr">
  <div id="keyBg"></div>
- <div id="key" contenteditable focus>key:>></div>
+ <%= form_for :key, :url => {action: :login}, :html => {id: "keyForm"} do |f| %>
+  <%= f.hidden_field :cipher %>
+  <div id="key" contenteditable>key:>></div>
+ <%- end -%>
+ <%- if flash[:notice] -%>
+ <div id="keyMsg"><%= flash[:notice] %></div>
+ <%- end -%>
 </div>
 <div id="info">
  <div id="about">

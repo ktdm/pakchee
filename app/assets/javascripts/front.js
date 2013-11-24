@@ -26,7 +26,7 @@ $(document).ready(function () {
  });
 
  $("#req").data({val: ""});
- $("#reqTxt").on("keydown keyup", function (e) {
+ $("#reqTxt").on("keydown keyup", function () {
   if ($(this).text().length > 10) {
    if (!$("#msgStr").length) msg("Too long"); // queue?
    $(this).text($("#req").data("val"))
@@ -54,9 +54,18 @@ $(document).ready(function () {
   msg("Error")
  });
 
+ $("#key").on("keypress", function (e) {
+  if (e.which == 13) {
+   e.preventDefault();
+   $("#key_cipher").val($("#key").text());
+   $("#keyForm").submit()
+  }
+ });
  $("#key").focus();
  ( window.getSelection ? window.getSelection() : document.selection.createRange() ).modify("move", "forward", "line")
 
+ setTimeout(function () { $("#keyMsg").addClass("fadeout") }, 0);
+ setTimeout(function () { $("#keyMsg").remove() }, 2000);
 });
 
 function msg(str) {

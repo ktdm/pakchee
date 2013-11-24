@@ -2,6 +2,8 @@ Pakchee::Application.routes.draw do
 
   root "front#index"
 
+  post "login" => "front#login"
+  get "logout" => "front#logout"
   get "scaffold" => "front#scaffold"
 
   resources :keys, :only => [:index, :create]

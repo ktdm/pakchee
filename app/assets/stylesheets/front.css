@@ -53,6 +53,13 @@ body {
  width: -webkit-calc(100% - .39em)
 }
 
+#keyMsg, #msgStr {
+ transition: opacity 1s ease-in-out 1s;
+ background-color: red;
+ color: black;
+ padding: .2em
+}
+
 ::selection {
  background-color: orchid
 }
@@ -119,10 +126,6 @@ p:last-child {
 }
 
 #msgStr {
- transition: opacity 1s ease-in-out 1s;
- background-color: red;
- color: black;
- padding: .2em
 }
 
 .fadeout {
