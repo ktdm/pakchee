@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Follow directions on github when moving to production!
 gem 'symmetric-encryption'
 
+gem 'nokogiri'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 

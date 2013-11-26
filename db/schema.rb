@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20131123053102) do
 
   create_table "sites", force: true do |t|
     t.text     "io",         default: ""
-    t.text     "ops",        default: ""
+    t.text     "ops",        default: "--- {}\n"
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"

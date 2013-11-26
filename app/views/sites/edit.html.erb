@@ -1,9 +1,24 @@
 <h1>Edit site</h1>
 <h2>Reserved by management</h2>
-<%= form_for :site, url: site_path(@site), method: :patch do |f| %>
-<div>io</div>
-<%=  f.text_area :io %>
-<div>ops</div>
-<%=  f.text_area :ops %>
+<%= form_for @site, method: :patch do |f| %>
+<%=  f.hidden_field :io %>
+<input type="button" value="+" id="add_op" />
+<div id="ops">
+ <div>
+  <div>Op name</div>
+  <div>Op erb</div>
+ </div>
+<%   @op.each_with_index do |p, i| %>
+ <div>
+  <div>
+<%=   text_field_tag "op[][name]", p["name"] %>
+   <input type="button" value="-" id="delete_op_<%= i %>" />
+  </div>
+  <div>
+<%=   text_area_tag "op[][erb]", p["erb"] %>
+  </div>
+ </div>
+<%   end %>
+</div>
 <%=  f.submit %>
 <%- end -%>

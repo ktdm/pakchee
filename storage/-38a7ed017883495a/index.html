@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <title>19 5th Avenue bulletin board</title>
+  <style type="text/css">
+
+* {
+ padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+ -moz-box-sizing: border-box
+}
+
+html, body {
+ width: 100%;
+ height: 100%
+}
+
+body {
+ padding: 5px
+}
+
+h1 {
+ margin: 1em 2em .5em 2em
+}
+
+textarea {
+ width: 100%;
+ height: 10em;
+ resize: none
+}
+
+div#all_posts {
+ border: 1px solid grey
+}
+
+input[type=submit] {
+ padding: .3em
+}
+
+  </style>
+  <script type="text/javascript">
+
+function readTextFile (file) {
+ var rawFile = new XMLHttpRequest();
+ rawFile.open("GET", file, true);
+ rawFile.onreadystatechange = function () {
+  if (rawFile.readyState == 4 && rawFile.status == 200 || rawFile.status == 0) get_posts(rawFile.responseText)
+ }
+ rawFile.send(null);
+}
+
+function $ (id) { return document.getElementById(id) }
+
+function init () {
+ readTextFile("posts.json")
+}
+
+function get_posts (x) {
+ var posts = JSON.parse(x), i, a;
+ for (i = 0; posts[i]; i++) {
+  a = document.createElement("div");
+  a.innerHTML = posts[i].item;
+  $("all_posts").appendChild(a)
+ }
+}
+
+  </script>
+ </head>
+ <body onload="init()" onbeforeunload="init()">
+  <h1>Bulletin Board</h1>
+  <div id="all_posts"></div>
+  <br />
+  <form accept-charset="UTF-8" action="/post" method="post">
+   <textarea id="text" name="post"></textarea>
+   <input type="submit" />
+  </form>
+ </body>
+</html>

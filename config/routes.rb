@@ -2,9 +2,9 @@ Pakchee::Application.routes.draw do
 
   root "front#index"
 
+  post "post" => "front#post"
   post "login" => "front#login"
   get "logout" => "front#logout"
-  get "scaffold" => "front#scaffold"
 
   resources :keys, :only => [:index, :create]
 
@@ -15,6 +15,8 @@ Pakchee::Application.routes.draw do
       delete 'destroy_multiple'
     end
   end
+
+  match "/*local", to: "front#index", via: :get
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

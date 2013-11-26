@@ -1,6 +1,7 @@
 class Site < ActiveRecord::Base
   has_many :keys
   after_save :generate_state_ref
+  serialize :ops, Hash
 
   private
     def generate_state_ref

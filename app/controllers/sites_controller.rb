@@ -12,10 +12,12 @@ class SitesController < ApplicationController
 
   def edit
     @site = Site.find(params[:id])
+    @op = @site.ops.to_a.map {|p| {"name" => p[0], "erb" => p[1]} } # map! ?
   end
 
   def update
     @site = Site.find(params[:id])
+    @site.ops = op_params.map {|x| {x[:name] => x[:erb]} }.inject(:merge)
     if @site.update(site_params)
       redirect_to @site
     else
@@ -26,6 +28,10 @@ class SitesController < ApplicationController
   private
     def site_params
       params.require(:site).permit(:io, :ops, :state)
+    end
+
+    def op_params
+      params.require(:op)
     end
 
 end

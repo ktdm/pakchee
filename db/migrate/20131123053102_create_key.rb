@@ -9,7 +9,7 @@ class CreateKey < ActiveRecord::Migration
 
     create_table :sites do |t|
       t.text :io, :default => ""
-      t.text :ops, :default => ""
+      t.text :ops, :default => "--- {}\n"
       t.string :state
 
       t.timestamps

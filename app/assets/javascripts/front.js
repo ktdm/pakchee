@@ -27,7 +27,7 @@ $(document).ready(function () {
 
  $("#req").data({val: ""});
  $("#reqTxt").on("keydown keyup", function () {
-  if ($(this).text().length > 10) {
+  if ($(this).text().length > 500) {
    if (!$("#msgStr").length) msg("Too long"); // queue?
    $(this).text($("#req").data("val"))
   } else {
@@ -61,11 +61,15 @@ $(document).ready(function () {
    $("#keyForm").submit()
   }
  });
+ $("#key").on("paste", function () { setTimeout(function () { $("#key").text($("#key").text()) }, 0) });
  $("#key").focus();
  ( window.getSelection ? window.getSelection() : document.selection.createRange() ).modify("move", "forward", "line")
 
  setTimeout(function () { $("#keyMsg").addClass("fadeout") }, 0);
- setTimeout(function () { $("#keyMsg").remove() }, 2000);
+ setTimeout(function () {
+  document.getElementById("keyCtr").offsetHeight;
+  $("#keyMsg").remove()
+ }, 2000);
 });
 
 function msg(str) {
