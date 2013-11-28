@@ -1,5 +1,9 @@
 class RequestsController < ApplicationController
 
+  before_action do |ctr|
+    redirect_to session.delete(:return_to) unless Key.find_by_id SymmetricEncryption.try_decrypt(session[:key]) == "1" # creates blind spot
+  end
+
   def index
     @requests = Request.all
   end

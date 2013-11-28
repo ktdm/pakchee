@@ -1,10 +1,16 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
 
-  #def current_user
-  #  @_current_key ||= session[:key] &&
-  #    Key.find_by(id: session[:key])
-  #end
+  protect_from_forgery with: :exception
+  before_action :require_key
+ 
+  private
+ 
+  def require_key
+    unless session[:key]
+      flash[:notice] = "Get a key."
+      redirect_to :root
+    end
+    session[:return_to] ||= request.referer
+  end
+
 end
