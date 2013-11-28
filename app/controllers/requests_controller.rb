@@ -1,7 +1,8 @@
 class RequestsController < ApplicationController
 
-  before_action do |ctr|
-    redirect_to session.delete(:return_to) unless Key.find_by_id SymmetricEncryption.try_decrypt(session[:key]) == "1" # creates blind spot
+  skip_before_action :require_key, only: :create
+  before_action only: [:index, :destroy_multiple] do |ctr|
+    redirect_to ( session.delete(:return_to) || :root ) unless Key.find_by_id SymmetricEncryption.try_decrypt(session[:key]) == "1" # creates blind spot
   end
 
   def index

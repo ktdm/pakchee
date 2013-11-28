@@ -16,6 +16,6 @@ Pakchee::Application.routes.draw do
     end
   end
 
-  match "/*local", to: "front#catchall", via: :get
+  match "/*local", to: "front#index", via: :get
 
 end

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <title>19 5th Avenue bulletin board</title>
+  <script src="bb.js"></script>
+  <link href="bb.css" rel="stylesheet" />
+ </head>
+ <body onload="init()" onbeforeunload="init()">
+  <h1>Bulletin Board</h1>
+  <div id="all_posts"></div>
+  <form accept-charset="UTF-8" action="/post" method="post">
+   <textarea id="text" name="post"></textarea>
+   <input type="submit" value="Post"/>
+  </form>
+ </body>
+</html>

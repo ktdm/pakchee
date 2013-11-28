@@ -19,7 +19,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: pakchee
   pool: 5
   timeout: 5000
+  username: pakchee
+  host: localhost
+  password: <%= SymmetricEncryption.try_decrypt "+ssnz16ZmgZm8Tdlk2TI9Q8+U+np2N3kp/1xkHF/M3s=" %>

@@ -8,7 +8,7 @@ class Site < ActiveRecord::Base
       unless self.state
         self.state = self.id.hash.to_s(16)
         self.save
-        Dir.mkdir(File.join(Rails.root, "storage", self.state))
+        Dir.mkdir(File.join(Rails.root, "storage", self.state)) unless File.directory?(File.join(Rails.root, "storage", self.state))
         FileUtils.chmod("og=t,u=rwx", File.join(Rails.root, "storage", self.state))
       end
     end

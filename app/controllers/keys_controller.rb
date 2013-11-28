@@ -1,5 +1,10 @@
 class KeysController < ApplicationController
 
+  skip_before_action :require_key, :if => lambda {|c| Key.find_by_id(1).nil? }
+  before_action do |ctr|
+    redirect_to ( session.delete(:return_to) || :root ) unless Key.find_by_id SymmetricEncryption.try_decrypt(session[:key]) == "1" # creates blind spot
+  end
+
   def create
     @key = Key.new(key_params)
     if @key.site_id

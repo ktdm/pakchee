@@ -1,6 +1,7 @@
 class FrontController < ApplicationController
 
   skip_before_action :require_key, only: [:index, :login, :logout]
+  before_action :require_key, only: :index, :unless => lambda {|c| params[:local].nil? } #https://github.com/rails/rails/issues/9703
 
   def index
     if session[:key]
@@ -8,6 +9,8 @@ class FrontController < ApplicationController
       state_dir = File.join(Rails.root, "storage", @site.state)
       filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
       render text: ( [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) ) #make safe
+    #elsif params[:local]
+    #  redirect_to :root
     end
   rescue Errno::ENOENT
     render text: "<body style=\"background-color:red\"><h1>Not found.</h1></body>", status: :not_found
@@ -33,9 +36,9 @@ class FrontController < ApplicationController
     redirect_to :root
   end
 
-  def catchall
-    index
-  end
+  #def catchall
+  #  index
+  #end
 
   private
     def key_params

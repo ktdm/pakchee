@@ -1,3 +1,5 @@
+<span>Current key: <%= session[:key] %></span>
+
 <h1>Create a key</h1>
 <%= form_for :key, :url => {action: "create"}, :html => {id: "save_key"} do |f| %>
 <%=  f.submit %>

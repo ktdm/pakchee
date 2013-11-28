@@ -17,11 +17,11 @@ class CreateKey < ActiveRecord::Migration
 
     reversible do |dir|
       dir.up do
-        Dir.mkdir(File.join(Rails.root, "storage"))
+        Dir.mkdir(File.join(Rails.root, "storage")) unless File.directory?(File.join(Rails.root, "storage"))
         FileUtils.chmod("og=t,u=rwx", File.join(Rails.root, "storage"))
       end
       dir.down do
-        FileUtils.remove_entry_secure(File.join(Rails.root, "storage"))
+        FileUtils.remove_entry_secure(File.join(Rails.root, "storage")) if File.directory?(File.join(Rails.root, "storage"))
       end
     end
   end

@@ -15,3 +15,8 @@
 /log/*.log
 /tmp
 *~
+
+# Uncomment on heroku branch
+# /storage
+.env
+/misc
