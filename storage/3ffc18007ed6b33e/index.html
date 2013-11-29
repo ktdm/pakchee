@@ -6,9 +6,10 @@
   <link href="bb.css" rel="stylesheet" />
  </head>
  <body onload="init()" onbeforeunload="init()">
-  <h1>Bulletin Board</h1>
-  <div id="all_posts"></div>
-  <form accept-charset="UTF-8" action="/post" method="post">
+  <h1 class="title">Bulletin Board</h1>
+  <div id="all_posts" class="body"></div>
+  <form accept-charset="UTF-8" action="/post" method="post" class="form">
+   <input type="hidden" name="reply_to" />
    <textarea id="text" name="post"></textarea>
    <input type="submit" value="Post"/>
   </form>

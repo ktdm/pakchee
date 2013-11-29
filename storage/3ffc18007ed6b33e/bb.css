@@ -2,7 +2,8 @@
  padding: 0;
  margin: 0;
  box-sizing: border-box;
- -moz-box-sizing: border-box
+ -moz-box-sizing: border-box;
+ -webkit-box-sizing:border-box
 }
 
 html, body {
@@ -14,31 +15,60 @@ body {
  padding: 5px
 }
 
-h1 {
+/**/
+h1.title {
  margin: 1em 2em .5em 2em
+}
+
+/**/
+div.body {
+
+}
+
+div.thread {
+ margin: 4em 1em 1em 1em;
+ background-color: #ddd;
+ display: table;
+ width: 80%;
+ border-collapse: collapse
+}
+div.thread:first-child {
+ margin-top: 1em
+}
+
+div.post {
+ display: table-row
+}
+
+div.post > * {
+ display: table-cell;
+ padding: .3em
+}
+
+div.author {
+ width: 10em;
+ padding-left: 1em
+}
+
+div.itemBody {
+ height: 4.5em;
+ border: .8em solid #ddd;
+ background-color: #bbb
+}
+
+/**/
+form.form {
+ margin: .3em
 }
 
 textarea {
  width: 100%;
- height: 10em;
- resize: none
-}
-
-div#all_posts {
- border: 1px solid grey
-}
-
-div#all_posts > * {
- margin: 1em;
- padding: .3em;
- background-color: #ddd
-}
-
-form {
- margin-top: .3em
+ height: 8em;
+ resize: none;
+ font-size: 12pt
 }
 
 input[type=submit] {
  padding: .3em;
- margin-top: .3em
+ margin: .3em 0
 }
