@@ -9,8 +9,6 @@ class FrontController < ApplicationController
       state_dir = File.join(Rails.root, "storage", @site.state)
       filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
       render text: ( [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) ) #make safe
-    #elsif params[:local]
-    #  redirect_to :root
     end
   rescue Errno::ENOENT
     render text: "<body style=\"background-color:red\"><h1>Not found.</h1></body>", status: :not_found
@@ -35,10 +33,6 @@ class FrontController < ApplicationController
     session[:key] = nil
     redirect_to :root
   end
-
-  #def catchall
-  #  index
-  #end
 
   private
     def key_params

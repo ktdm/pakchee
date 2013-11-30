@@ -7,11 +7,18 @@
  </head>
  <body onload="init()" onbeforeunload="init()">
   <h1 class="title">Bulletin Board</h1>
-  <div id="all_posts" class="body"></div>
-  <form accept-charset="UTF-8" action="/post" method="post" class="form">
-   <input type="hidden" name="reply_to" />
-   <textarea id="text" name="post"></textarea>
-   <input type="submit" value="Post"/>
-  </form>
+  <div id="all_posts" class="body">
+   <div id="new_thread" class="final">
+    <form accept-charset="UTF-8" action="/post" method="post" id="post_msg" class="form">
+     <input type="hidden" id="idField" name="post[id]" />
+     <input type="hidden" id="replies_to" name="post[replies_to]" />
+     <div class="author">
+      <input type="text" id="name" /><!--name="post[name]" /-->
+     </div>
+     <textarea id="text" name="post[body]"></textarea>
+     <input type="submit" value="Post"/>
+    </form>
+   </div>
+  </div>
  </body>
 </html>
