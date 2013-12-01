@@ -22,7 +22,6 @@ h1.title {
 
 /**/
 div.body {
-
 }
 
 div.thread, div.context, div.final {
@@ -43,6 +42,14 @@ div.thread > *, div.context > * {
 }
 div.thread > * > *, div.context > * > * {
  display: table-cell
+}
+
+div.thread > div.notice {
+ display: table-caption;
+ caption-side: bottom;
+ padding: 1em;
+ background-color: gold;
+ transition: background-color 1s ease-in-out .7s
 }
 
 div.context {
@@ -105,6 +112,17 @@ div.itemBody {
  background-color: #bbb
 }
 
+div.timestamp {
+ text-align: right;
+ color: #777;
+ font-size: 9pt;
+ padding-right: 1em;
+ font-style: italic
+}
+div.timestamp:before {
+ content: "Posted "
+}
+
 /**/
 form.form {
  margin: .3em
@@ -115,8 +133,11 @@ div.author {
 }
 div.author > input {
  margin: .4em 0;
- padding: .2em;
- width: 8.5em
+ padding: .2em .3em .1em .3em;
+ width: 8.5em;
+ border: 1px solid #999;
+ border-radius: 4px;
+ font-size: 12pt
 }
 
 textarea {
@@ -124,10 +145,18 @@ textarea {
  height: 8em;
  resize: vertical;
  font-size: 12pt;
- padding: .2em
+ padding: .3em;
+ border: 1px solid #999;
+ border-radius: 4px
 }
 
 input[type=submit] {
  padding: .3em;
  margin: .3em 0
+}
+
+/**/
+div.footer {
+ height: 1px;
+ margin-top: 1em
 }

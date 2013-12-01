@@ -8,21 +8,55 @@ function addEvent (el, event, fn) {
   el.attachEvent("on" + event, function () { return fn.call(el, window.event) })
 }
 
-function readTextFile (file, callback) {
- var rawFile = new XMLHttpRequest();
- rawFile.open("GET", file, true);
- rawFile.onreadystatechange = function () {
-  if (rawFile.readyState == 4 && rawFile.status == 200 || rawFile.status == 0) callback(rawFile.responseText)
+function ajax(url, params, method, callback, headers) {
+ var req, enc, m = method.toUpperCase(), a, b = "?";
+ if (XMLHttpRequest) req = new XMLHttpRequest();
+ else {
+  var versions = ["MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"], i = 0;
+  for (; i<versions.length; i++) {
+   try {
+    req = new ActiveXObject(versions[i]);
+    break
+   }
+   catch (e) {}
+  }
  }
- rawFile.send(null);
+ for (a in params) b += a + "=" + encodeURIComponent(params[a]) + "&";
+ if (m == "POST") enc = b.replace(/%20/g, '+').slice(1, -1)
+ else if (m == "GET") url += b.slice(0, -1);
+ req.onreadystatechange = function () {
+  if (req.readyState < 4 || req.status !== 200) return;
+  if (req.readyState === 4 || req.status === 0) callback(req)
+ }
+ req.open(method, url, true);
+ if (m == "POST") req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+ if (headers) for (c in headers) req.setRequestHeader(c, headers[c]);
+ req.send(m == "GET" ? '' : enc);
 }
 
 function init () {
  addEvent($("post_msg"), "click", function (e) { e.stopPropagation() });
+ addEvent($("post_msg"), "submit", function (e) {
+  e.preventDefault();
+  $("post_msg").style.display = "none";
+  for (var params = {}, a = 0; this.elements[a]; a++) params[this.elements[a].name] = this.elements[a].value;
+  params["post[timestamp]"] = new Date().getTime();
+  ajax(this.action, params, this.method, function (r) {
+   var a = document.createElement("div");
+   a.innerHTML = JSON.parse(r.responseText).notice;
+   a.className = "notice";
+   $("post_msg").parentNode.insertBefore(a, $("post_msg"));
+   $("post_msg").reset();
+   a.offsetHeight;
+   a.style.backgroundColor = "#ddd";
+   setTimeout(function () { location.reload(false) }, 2000)
+  });
+  return false
+ });
  $("post_msg").reset();
- readTextFile("names.json", function (t) {
-  people = JSON.parse(t);
-  readTextFile("posts.json", get_posts)
+ ajax("names.json", null, "GET", function (t) {
+  people = JSON.parse(t.responseText);
+  ajax("posts.json", null, "GET", get_posts)
  })
  addEvent($("new_thread"), "click", function () {
   this.appendChild($("post_msg"));
@@ -37,7 +71,7 @@ var
  reply_to = [];
 
 function get_posts (x) {
- var posts = JSON.parse(x), i, j, k, a, b, c, trail = [], d, t, tc, p;
+ var posts = JSON.parse(x.responseText), i, j, k, z, a, b, c, trail = [], d, t, tc, p;
  for (i = 0; posts[i]; i++) {
   if (posts[i].replies_to) {
    for (j = 0; !threads[j].splice( parseInt(posts[i].id), parseInt(posts[i].replies_to) ); j++) {}
@@ -47,10 +81,14 @@ function get_posts (x) {
   a = document.createElement("div");
   b = a.cloneNode(false);
   c = a.cloneNode(false);
+  z = a.cloneNode(false);
+  z.innerHTML = new Date( parseInt(posts[i].timestamp) ).toLocaleString();
+  z.className = "timestamp";
   a.innerHTML = people[posts[i].author - 1];
   a.className = "author";
   b.innerHTML = posts[i].body;
   b.className = "itemBody";
+  b.appendChild(z);
   c.id = "post_" + posts[i].id;
   c.className = "post";
   c.appendChild(a);
@@ -117,7 +155,7 @@ function reply_click () {
  it.style.transition = null;
  it.style.backgroundColor = "gold";
  it.offsetHeight;
- it.style.transition = "background-color 1s ease-in-out 1s";
+ it.style.transition = "background-color 1s ease-in-out .7s";
  it.style.backgroundColor = null;
  $("post_msg").replies_to.value = window.reply_to[0].id.split("_")[1];
  setTimeout(function () {
@@ -155,11 +193,11 @@ function Thread () {
   return false
  }
  for (var i = 0; i < arguments.length; i++) this.push(arguments[i]);
+
  this.headContexts = function () {
   for (var i = 0, hc = []; this.heads[i]; i++) hc.push( this.context(this.heads[i]) );
   return hc
  }
-
  this.context = function (index) {
   for (var a = 0, b = [], c; a < this.length; a++) {
    if (this[a] instanceof Thread) {

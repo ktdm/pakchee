@@ -8,7 +8,8 @@ class FrontController < ApplicationController
       @site = Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).site
       state_dir = File.join(Rails.root, "storage", @site.state)
       filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
-      render text: ( [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) ) #make safe
+      document = [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) #make safe
+      render text: document
     end
   rescue Errno::ENOENT
     render text: "<body style=\"background-color:red\"><h1>Not found.</h1></body>", status: :not_found
@@ -19,7 +20,7 @@ class FrontController < ApplicationController
     ops_to_run = @site.ops.select { |p| params.except("authenticity_token", "action", "controller").has_key? p } #TODO: multi ops
     ops_to_run.each { |k, v| instance_variable_set("@#{k}", params[k]) }
     prep_io
-    render inline: ops_to_run.values.inject(:concat)
+    render inline: ops_to_run.values.inject(:concat) #sanitise with block?
   end
 
   def login
