@@ -16,9 +16,27 @@ body {
  background: #444 url(/assets/icecream.jpg) 25% 75% / cover no-repeat fixed
 }
 
+#title {
+ width: 100%;
+ margin: 4% 0 3.6% 0;
+ height: 1.4em;
+ font-size: 48pt;
+ font-family: sans-serif
+}
+text {
+ width: 100%;
+ height: 100%;
+ font-weight: bold;
+ text-anchor: middle
+}
+#title > text {
+ fill: transparent;
+ color: white
+}
+
 #keyCtr {
  position: relative;
- margin: 10% 10%;
+ margin: 0 25%;
  font-size: 24pt;
  height: 1.45em;
  width: 50%

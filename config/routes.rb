@@ -5,6 +5,7 @@ Pakchee::Application.routes.draw do
   post "post", to: "front#post"
   post "login", to: "front#login"
   get "logout", to: "front#logout"
+  get "ping", to: "front#ping"
 
   resources :keys, :only => [:index, :create]
 

@@ -9,18 +9,24 @@
   <h1 class="title">Bulletin Board</h1>
   <div id="all_posts" class="body">
    <div id="new_thread" class="final">
-    <form accept-charset="UTF-8" action="/post" method="post" id="post_msg" class="form">
+    <form accept-charset="UTF-8" action="/post" method="post" id="post_msg">
      <input type="hidden" id="idField" name="post[id]" />
      <input type="hidden" id="replies_to" name="post[replies_to]" />
      <input type="hidden" id="timestamp" name="post[timestamp]" />
      <div class="author">
-      <input type="text" id="name" /><!--name="post[name]" /-->
+      <input type="text" id="name" />
      </div>
      <textarea id="text" name="post[body]"></textarea>
-     <input id="submit" type="submit" value="Post"/>
+     <input type="submit" id="submit" value="Post"/>
     </form>
    </div>
   </div>
   <div class="footer"></div>
+  <div class="post stamp">
+   <div class="author"></div>
+   <div class="itemBody">
+    <div class="timestamp"></div>
+   </div>
+  </div>
  </body>
 </html>

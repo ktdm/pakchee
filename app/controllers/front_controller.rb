@@ -35,6 +35,10 @@ class FrontController < ApplicationController
     redirect_to :root
   end
 
+  def ping
+    render :nothing => true
+  end
+
   private
     def key_params
       params.require(:key).permit(:cipher)

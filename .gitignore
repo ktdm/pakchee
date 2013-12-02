@@ -17,6 +17,7 @@
 *~
 
 # Uncomment on heroku branch
-# /storage
+#/storage
+/storage/3ffc18007ed6b33e
 .env
 /misc
