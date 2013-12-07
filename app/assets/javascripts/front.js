@@ -61,7 +61,10 @@ $(document).ready(function () {
    $("#keyForm").submit()
   }
  });
- $("#key").on("paste", function () { setTimeout(function () { $("#key").text($("#key").text()) }, 0) });
+ $("#key").on("paste", function () { setTimeout(function () {
+  $("#key").text($("#key").text());
+  selEnd($("#key")[0])
+ }, 0) });
  $("#key").focus();
  ( window.getSelection ? window.getSelection() : document.selection.createRange() ).modify("move", "forward", "line")
 
@@ -81,4 +84,21 @@ function msg(str) {
   $("#minimise").css({ display: "block" });
   $("#msgStr").remove()
  }, 2000);
+}
+
+function selEnd(el) {
+ var range, selection;
+ if (document.createRange) {
+  range = document.createRange();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range)
+ } else if(document.selection) { 
+  range = document.body.createTextRange();
+  range.moveToElementText(el);
+  range.collapse(false);
+  range.select()
+ }
 }

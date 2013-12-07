@@ -67,6 +67,7 @@ text {
  color: white;
  font-family: monospace;
  overflow: hidden;
+ white-space: nowrap;
  width: calc(100% - .39em);
  width: -webkit-calc(100% - .39em)
 }

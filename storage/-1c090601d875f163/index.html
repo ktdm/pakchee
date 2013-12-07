@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chat?</title>
+        <script src="chat.js"></script>
+        <link href="chat.css" rel="stylesheet" />
+    </head>
+    <body onload="init()">
+        <div id="conversation">
+            <form id="post" accept-charset="UTF-8" action="/post" method="post">
+                <input type="hidden" id="timestamp" name="post[timestamp]" />
+                <div id="author" class="author"></div>
+                <div>
+                    <textarea id="body" name="post[body]" placeholder="Type something"></textarea>
+                    <input type="submit" value="Post" />
+                </div>
+            </form>
+        </div>
+        <div id="item_stamp" class="stamp">
+            <div class="author"></div>
+            <div class="body">
+                <div class="timestamp"></div>
+            </div>
+        </div>
+    </body>
+</html>

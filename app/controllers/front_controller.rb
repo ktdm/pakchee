@@ -46,12 +46,12 @@ class FrontController < ApplicationController
 
     def csrf_protect(file)
       doc = Nokogiri::HTML(file)
-      doc.xpath("//form").each do |form|
-        form.first_element_child.before (
+      doc.xpath("//form/*[1]").each do |formfirst|
+        formfirst.before (
           "<input type=\"hidden\" name=\"" + request_forgery_protection_token.to_s + "\" value=\"" + form_authenticity_token + "\" />"
         )
       end
-      doc.to_html(:indent => 2) #?
+      doc.to_html(:indent => 2) #not indenting, only first form being modified
     end
 
     def prep_io
