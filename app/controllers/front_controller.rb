@@ -5,7 +5,7 @@ class FrontController < ApplicationController
 
   def index
     if session[:key]
-      @site = Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).site
+      @site = Site.find_all_by_id(Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).roles.select(:site_id)).first #find which?
       state_dir = File.join(Rails.root, "storage", @site.state)
       filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
       document = [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) #make safe
@@ -16,7 +16,7 @@ class FrontController < ApplicationController
   end
 
   def post
-    @site = Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).site #optimise
+    @site = Site.find_by_id(Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).roles.select(:site_id)) #optimise
     ops_to_run = @site.ops.select { |p| params.except("authenticity_token", "action", "controller").has_key? p } #TODO: multi ops
     ops_to_run.each { |k, v| instance_variable_set("@#{k}", params[k]) }
     prep_io

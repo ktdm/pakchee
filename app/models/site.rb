@@ -1,5 +1,10 @@
 class Site < ActiveRecord::Base
-  has_many :keys
+
+  has_many :roles, inverse_of: :sites
+  has_many :keys, through: :roles
+
+  accepts_nested_attributes_for :roles
+
   after_save :generate_state_ref
   serialize :ops, Hash
 
@@ -12,4 +17,5 @@ class Site < ActiveRecord::Base
         FileUtils.chmod("og=t,u=rwx", File.join(Rails.root, "storage", self.state))
       end
     end
+
 end

@@ -1,14 +1,15 @@
 class Key < ActiveRecord::Base
-  belongs_to :site
-  after_create :putz
 
-  validates :role,
-    presence: true,
-    inclusion: { in: %w(basic council),
-      message: "%{value} not a valid role." }
+  has_many :roles, inverse_of: :keys
+  has_many :sites, through: :roles
+
+  accepts_nested_attributes_for :roles
+
+  after_create :putz
 
   private
     def putz
       puts SymmetricEncryption.encrypt(self.id) #yech
     end
+
 end

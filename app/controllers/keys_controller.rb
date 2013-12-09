@@ -6,20 +6,24 @@ class KeysController < ApplicationController
   end
 
   def create
-    @key = Key.new(key_params)
-    if @key.site_id
-      @key.site = Site.find(@key.site_id)
-      @key.save
-      redirect_to @key.site
+    if key_params[:site_id]
+      key = Key.new
+      key.save
+      site = Site.find_by_id(key_params[:site_id])
+      key.roles << site.roles.build(title: key_params[:role])
+      key.save
+      redirect_to site
     elsif site_do_params[:init] == "new"
-      @key.site = Site.new
-      @key.site.save
-      @key.save
-      redirect_to edit_site_path(@key.site)
+      key = Key.new
+      key.save
+      site = Site.create
+      key.roles << site.roles.build(title: key_params[:role])
+      key.save
+      redirect_to edit_site_path(site)
     elsif site_do_params[:init] == "existing"
-      @site_ids = Site.select(:id)
-      render :json => @site_ids if @site_ids.length != 0
-      render :json => "{\"error\": \"No sites found.\"}" if @site_ids.length == 0
+      site_ids = Site.select(:id)
+      render :json => site_ids if site_ids.length != 0 #move to views? 
+      render :json => "{\"error\": \"No sites found.\"}" if site_ids.length == 0
     end
   end
 

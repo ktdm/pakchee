@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131123053102) do
+ActiveRecord::Schema.define(version: 20131209080746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "keys", force: true do |t|
-    t.string   "role",       default: "basic"
-    t.integer  "site_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -29,8 +27,16 @@ ActiveRecord::Schema.define(version: 20131123053102) do
     t.datetime "updated_at"
   end
 
+  create_table "roles", id: false, force: true do |t|
+    t.integer "key_id",  null: false
+    t.integer "site_id", null: false
+    t.string  "title"
+  end
+
+  add_index "roles", ["key_id", "site_id"], name: "index_roles_on_key_id_and_site_id", using: :btree
+  add_index "roles", ["site_id", "key_id"], name: "index_roles_on_site_id_and_key_id", using: :btree
+
   create_table "sites", force: true do |t|
-    t.text     "io",         default: ""
     t.text     "ops",        default: "--- {}\n"
     t.string   "state"
     t.datetime "created_at"

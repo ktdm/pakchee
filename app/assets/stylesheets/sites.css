@@ -3,10 +3,6 @@
  -moz-box-sizing: border-box
 }
 
-div {
- white-space: nowrap
-}
-
 span:last-child {
  background-color: plum
 }

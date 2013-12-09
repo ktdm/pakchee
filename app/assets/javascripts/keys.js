@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
  if ($("#site_do_init_existing").is(":checked")) $("#save_key").attr("data-remote", "true");
- if ($("#site_do_init_new").is(":checked")) $("#key_role_council").prop("checked", true);
+ if ($("#site_do_init_new").is(":checked")) $("#key_role_mod").prop("checked", true);
  $("#site_do_init_new").change(function () {
   if ($("#site_do_init_new").is(":checked")) {
-   $("#key_role_council").prop("checked", true);
+   $("#key_role_mod").prop("checked", true);
    $("#save_key").removeAttr("data-remote");
    $("#save_key").removeData("remote")
   }
