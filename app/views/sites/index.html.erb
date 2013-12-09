@@ -1,1 +1,32 @@
-<h1>Attach key to site</h1>
+<%= form_for :site, :url => {action: :run} do |f| %>
+<%= f.hidden_field :hash %>
+<svg id="numbering">
+ <defs>
+  <mask id="textMask" x="0" y="0" width="2em" height="100%">
+   <rect x="0" y="0" width="2em" height="100%" fill="white"/>
+<% @sites.each_with_index do |site, index| %>
+   <text x="1em" y="<%= 2.3 + index %>em"><%= index + 1 %>.</text>
+<%- end -%>
+  </mask>
+ </defs>
+ <rect x="0" y="0" width="2em" height="100%" fill="white" mask="url(#textMask)" />
+<% @sites.each_with_index do |site, index| %>
+ <text x="1em" y="<%= 2.3 + index %>em"><%= index + 1 %>.</text>
+<%- end -%>
+</svg>
+<div class="sites" action="/run" method="post" id="run">
+<% @sites.each_with_index do |site, index| %>
+  <span class="site" id="<%= site.state %>"><%=
+    begin
+      file = File.read File.join(Rails.root, "storage", site.state, "index.html")
+      doc = Nokogiri::HTML file
+      title = doc.xpath("//title/text()[1]")
+      fail if title.nil?
+      title
+    rescue
+      site.state
+    end
+  %></span>
+<%- end -%>
+</div>
+<%- end -%>

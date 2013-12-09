@@ -13,7 +13,12 @@ html, body {
 }
 
 body {
- background: #444 url(/assets/icecream.jpg) 25% 75% / cover no-repeat fixed
+ background-color: #444;
+ background-image: url(/assets/icecream.jpg);
+ background-position: 25% 75%;
+ background-size: cover;
+ background-repeat: no-repeat;
+ background-attachment: fixed
 }
 
 #title {

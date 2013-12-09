@@ -11,7 +11,7 @@ class KeysController < ApplicationController
       key.save
       site = Site.find_by_id(key_params[:site_id])
       key.roles << site.roles.build(title: key_params[:role])
-      key.save
+      key.save #shouldn't need double save
       redirect_to site
     elsif site_do_params[:init] == "new"
       key = Key.new

@@ -1,6 +1,68 @@
 * {
+ margin: 0;
+ padding: 0;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
  box-sizing: border-box;
- -moz-box-sizing: border-box
+}
+
+html, body {
+ width: 100%
+}
+
+body {
+ background-color: #444;
+ background-image: url(/assets/christmas.jpg);
+ background-position: top;
+ background-size: cover;
+ background-repeat: no-repeat;
+ background-attachment: fixed
+}
+
+.sites {
+ vertical-align: top;
+ padding-left: .8em
+}
+
+#numbering, .sites {
+ font-family: sans-serif;
+ display: inline-block
+}
+
+.site {
+ color: white;
+ font-size: 36pt;
+ height: 1.33em;
+ line-height: 1.4em;
+ border-bottom: 2px solid transparent;
+ float: left;
+ clear: both;
+ background-color: transparent !important
+}
+.site:first-child {
+ height: 3.35em;
+ line-height: 5.4em
+}
+.site:hover {
+ border-bottom: 2px solid white;
+ cursor: pointer
+}
+
+svg {
+ margin-left: 5%;
+ font-size: 48pt;
+ font-family: sans-serif;
+ width: 2em
+}
+text {
+ width: 100%;
+ height: 100%;
+ font-weight: bold;
+ text-anchor: middle
+}
+svg > text {
+ fill: transparent;
+ color: white
 }
 
 span:last-child {

@@ -5,18 +5,22 @@ class FrontController < ApplicationController
 
   def index
     if session[:key]
-      @site = Site.find_all_by_id(Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).roles.select(:site_id)).first #find which?
-      state_dir = File.join(Rails.root, "storage", @site.state)
-      filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
-      document = [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) #make safe
-      render text: document
+      if session[:site]
+        @site = Site.find_by_id session[:site]
+        state_dir = File.join(Rails.root, "storage", @site.state)
+        filepath = File.join(state_dir, @glob = ( params[:local] && params[:local].to_s + "." + params[:format].to_s || "index.html" ))
+        document = [".html", ".htm"].index(File.extname(filepath)).nil? ? File.read(filepath) : csrf_protect(File.read(filepath)) #make safe
+        render text: document
+      else
+        redirect_to "/sites"
+      end
     end
   rescue Errno::ENOENT
     render text: "<body style=\"background-color:red\"><h1>Not found.</h1></body>", status: :not_found
   end
 
   def post
-    @site = Site.find_by_id(Key.find_by_id( SymmetricEncryption.try_decrypt(session[:key]) ).roles.select(:site_id)) #optimise
+    @site = Site.find_by_id session[:site]
     ops_to_run = @site.ops.select { |p| params.except("authenticity_token", "action", "controller").has_key? p } #TODO: multi ops
     ops_to_run.each { |k, v| instance_variable_set("@#{k}", params[k]) }
     prep_io
@@ -32,6 +36,7 @@ class FrontController < ApplicationController
 
   def logout
     session[:key] = nil
+    session[:site] = nil
     redirect_to :root
   end
 
